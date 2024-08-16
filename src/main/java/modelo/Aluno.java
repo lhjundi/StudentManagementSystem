@@ -1,6 +1,10 @@
+package modelo;
+
 import jakarta.persistence.*;
 
 import java.math.BigDecimal;
+import java.sql.Array;
+import java.util.ArrayList;
 
 @Entity
 @Table(name = "alunos")
@@ -10,10 +14,42 @@ public class Aluno {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long        id;
     private String      nome;
+    private String      ra;
+
     private String      email;
+
     private BigDecimal  nota1;
     private BigDecimal  nota2;
     private BigDecimal  nota3;
+    public Aluno() {
+    }
+
+    public Aluno(String nome, String ra, String email, BigDecimal nota1, BigDecimal nota2, BigDecimal nota3) {
+        this.nome = nome;
+        this.ra = ra;
+        this.email = email;
+        this.nota1 = nota1;
+        this.nota2 = nota2;
+        this.nota3 = nota3;
+    }
+
+    public double calculaMedia(){
+        ArrayList<BigDecimal> notas = new ArrayList<>();
+        notas.add(getNota1());
+        notas.add(getNota2());
+        notas.add(getNota3());
+        return notas.stream()
+                .mapToDouble(BigDecimal::doubleValue)
+                .average()
+                .orElse(0);
+    }
+
+    public String defineStatus(){
+        double media = calculaMedia();
+        if ( media < 4 ) return "Reprovado";
+        if ( media < 6 ) return "Recuperação";
+        return "Aprovado";
+    }
 
     public Long getId() {
         return id;
@@ -29,6 +65,14 @@ public class Aluno {
 
     public void setNome(String nome) {
         this.nome = nome;
+    }
+
+    public String getRa() {
+        return ra;
+    }
+
+    public void setRa(String ra) {
+        this.ra = ra;
     }
 
     public String getEmail() {
