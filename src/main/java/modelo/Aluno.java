@@ -3,7 +3,6 @@ package modelo;
 import jakarta.persistence.*;
 
 import java.math.BigDecimal;
-import java.sql.Array;
 import java.util.ArrayList;
 
 @Entity
@@ -49,6 +48,15 @@ public class Aluno {
         if ( media < 4 ) return "Reprovado";
         if ( media < 6 ) return "Recuperação";
         return "Aprovado";
+    }
+
+    @Override
+    public String toString() {
+        return "Dados do aluno: \n" +
+                "Nome: " + nome + "\n" +
+                "Email: " + email + "\n" +
+                "RA: " + ra + "\n" +
+                "Notas: " + nota1 + " - " + nota2 + " - " + nota3  + "\n";
     }
 
     public Long getId() {
