@@ -11,7 +11,6 @@ import java.util.Scanner;
 public class Main {
 
     private static final AlunoDAO alunoDAO = DaoUtil.getAlunoDAO();
-    private static final EntityManager entityManager = JPAUtil.getEntityManager();
 
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
@@ -38,24 +37,33 @@ public class Main {
                     break;
                 case 2:
                     System.out.println("Excluir Aluno");
-                    System.out.print("Digite o RA do aluno a ser excluído: ");
-                    String raExcluir = scanner.nextLine();
-                    alunoDAO.;
+                    System.out.print("Digite o nome do aluno a ser excluído: ");
+                    String nomeCadastro = scanner.nextLine();
+                    alunoDAO.excluir(nomeCadastro);
                     break;
                 case 3:
+                    Aluno alunoAntigo;
+                    Aluno alunoNovo;
                     System.out.println("Alterar Aluno");
-                    Aluno alunoAlterado = criarAluno(scanner);
-                    alunoDAO.alterar(alunoAlterado);
+                    System.out.print("Digite o nome do aluno a ser alterado: ");
+                    String nomeAlterar = scanner.nextLine();
+                    alunoAntigo = alunoDAO.buscarAlunoPeloNome(nomeAlterar);
+                    if (alunoAntigo != null) {
+                        alunoNovo = alterarAluno(scanner, alunoAntigo);
+                        alunoDAO.alterarAluno(alunoAntigo, alunoNovo);
+                    } else {
+                        System.out.println("Aluno não encontrado.");
+                    }
                     break;
                 case 4:
                     System.out.println("Buscar aluno pelo nome");
                     System.out.print("Digite o nome do aluno: ");
                     String nomeBuscar = scanner.nextLine();
-                    alunoDAO.buscarPorNome(nomeBuscar);
+                    alunoDAO.buscarAlunoPeloNome(nomeBuscar);
                     break;
                 case 5:
                     System.out.println("Listar alunos (com status de aprovação)");
-                    alunoDAO.listarAlunos();
+                    alunoDAO.listarAprovados();
                     break;
                 case 6:
                     System.out.println("Fim do programa.");
@@ -89,9 +97,40 @@ public class Main {
         System.out.print("Digite a nota 3 do aluno: ");
         BigDecimal nota3 = scanner.nextBigDecimal();
 
-        scanner.nextLine();  // Consome a nova linha
+        scanner.nextLine();
 
         Aluno aluno = new Aluno();
+        aluno.setNome(nome);
+        aluno.setRa(ra);
+        aluno.setEmail(email);
+        aluno.setNota1(nota1);
+        aluno.setNota2(nota2);
+        aluno.setNota3(nota3);
+
+        return aluno;
+    }
+
+    private static Aluno alterarAluno(Scanner scanner, Aluno aluno) {
+        System.out.print("Digite o nome do aluno: ");
+        String nome = scanner.nextLine();
+
+        System.out.print("Digite o RA do aluno: ");
+        String ra = scanner.nextLine();
+
+        System.out.print("Digite o email do aluno: ");
+        String email = scanner.nextLine();
+
+        System.out.print("Digite a nota 1 do aluno: ");
+        BigDecimal nota1 = scanner.nextBigDecimal();
+
+        System.out.print("Digite a nota 2 do aluno: ");
+        BigDecimal nota2 = scanner.nextBigDecimal();
+
+        System.out.print("Digite a nota 3 do aluno: ");
+        BigDecimal nota3 = scanner.nextBigDecimal();
+
+        scanner.nextLine();
+
         aluno.setNome(nome);
         aluno.setRa(ra);
         aluno.setEmail(email);
