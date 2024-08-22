@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class AlunoDAO {
-    private EntityManager entityManager;
+    private final EntityManager entityManager;
 
     public AlunoDAO(EntityManager entityManager) {
         this.entityManager = entityManager;
