@@ -43,15 +43,6 @@ public class AlunoDAO {
                 .getSingleResult();
     }
 
-    public void listarAprovados(){
-        List<Aluno> alunos;
-        List <String> alunosString;
-        String jpql = "SELECT a FROM Aluno a";
-        alunos = this.entityManager.createQuery(jpql, Aluno.class).getResultList();
-        alunos = alunos.stream().filter(aluno -> aluno.calculaMedia() >= 6).toList();
-        alunosString = alunos.stream().map(Aluno::toString).toList();
-        alunosString.forEach(System.out::println);
-    }
 
     public void listarTodos(){
         System.out.println("Exibindo todos os alunos:");

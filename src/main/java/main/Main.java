@@ -63,7 +63,7 @@ public class Main {
                     break;
                 case 5:
                     System.out.println("Listar alunos (com status de aprovação)");
-                    alunoDAO.listarAprovados();
+                    alunoDAO.listarTodos();
                     break;
                 case 6:
                     System.out.println("Fim do programa.");
