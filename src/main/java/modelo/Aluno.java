@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Objects;
 
 @Entity
 @Table(name = "alunos")
@@ -57,6 +58,19 @@ public class Aluno {
                 "Email: " + email + "\n" +
                 "RA: " + ra + "\n" +
                 "Notas: " + nota1 + " - " + nota2 + " - " + nota3  + "\n";
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Aluno aluno = (Aluno) o;
+        return Objects.equals(id, aluno.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(id);
     }
 
     public Long getId() {
