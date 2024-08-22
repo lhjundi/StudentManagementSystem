@@ -22,14 +22,13 @@ public class AlunoDAO {
         this.entityManager.remove(aluno);
     }
 
-    public void alterarAluno(Aluno aluno, String nome, String RA, String email, BigDecimal nota1, BigDecimal nota2, BigDecimal nota3){
-        if ( aluno == null || nome == null ) return;
-        aluno.setNome(nome);
-        aluno.setRa(RA);
-        aluno.setEmail(email);
-        aluno.setNota1(nota1);
-        aluno.setNota2(nota2);
-        aluno.setNota3(nota3);
+    public void alterarAluno(Aluno aluno, Aluno alunoEditado){
+        aluno.setNome(alunoEditado.getNome());
+        aluno.setRa(alunoEditado.getRa());
+        aluno.setEmail(alunoEditado.getEmail());
+        aluno.setNota1(alunoEditado.getNota1());
+        aluno.setNota2(alunoEditado.getNota2());
+        aluno.setNota3(alunoEditado.getNota3());
         entityManager.merge(aluno);
     }
 
