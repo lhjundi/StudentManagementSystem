@@ -40,7 +40,7 @@ public class Main {
                     System.out.println("Excluir Aluno");
                     System.out.print("Digite o RA do aluno a ser excluído: ");
                     String raExcluir = scanner.nextLine();
-                    alunoDAO.excluir(raExcluir);
+                    alunoDAO.;
                     break;
                 case 3:
                     System.out.println("Alterar Aluno");

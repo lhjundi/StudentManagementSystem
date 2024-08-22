@@ -18,8 +18,12 @@ public class AlunoDAO {
         this.entityManager.persist(aluno);
     }
 
-    public void excluir(Aluno aluno){
+    public void excluir(String nome){
+        Aluno aluno;
+        aluno = buscarAlunoPeloNome(nome);
+        this.entityManager.getTransaction().begin();
         this.entityManager.remove(aluno);
+        this.entityManager.getTransaction().commit();
     }
 
     public void alterarAluno(Aluno aluno, Aluno alunoEditado){
