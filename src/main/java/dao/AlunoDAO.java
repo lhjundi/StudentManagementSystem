@@ -43,12 +43,35 @@ public class AlunoDAO {
                 .getSingleResult();
     }
 
-    public List<Aluno> listarAprovados(){
-        List<Aluno> alunos = new ArrayList<>();
+    public void listarAprovados(){
+        List<Aluno> alunos;
+        List <String> alunosString;
         String jpql = "SELECT a FROM Aluno a";
         alunos = this.entityManager.createQuery(jpql, Aluno.class).getResultList();
         alunos = alunos.stream().filter(aluno -> aluno.calculaMedia() >= 6).toList();
-        return alunos;
+        alunosString = alunos.stream().map(Aluno::toString).toList();
+        alunosString.forEach(System.out::println);
     }
 
-}
+    public void listarTodos(){
+        System.out.println("Exibindo todos os alunos:");
+        List<Aluno> alunos;
+        String jpql = "SELECT a FROM Aluno a";
+        alunos = this.entityManager.createQuery(jpql, Aluno.class).getResultList();
+
+        for (Aluno aluno : alunos) {
+            double media = aluno.calculaMedia();
+            String situacao = aluno.defineStatus();
+
+            System.out.println("-----------------------------");
+            System.out.println("Nome: " + aluno.getNome());
+            System.out.println("Email: " + aluno.getEmail());
+            System.out.println("RA: " + aluno.getRa());
+            System.out.println("Notas: " + aluno.getNota1() + " - " + aluno.getNota2() + " - " + aluno.getNota3());
+            System.out.println("Média: " + media);
+            System.out.println("Situação: " + situacao);
+            System.out.println("-----------------------------");
+        }
+    }
+    }
+
