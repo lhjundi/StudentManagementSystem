@@ -15,7 +15,9 @@ public class AlunoDAO {
     }
 
     public void cadastrar(Aluno aluno){
+        this.entityManager.getTransaction().begin();
         this.entityManager.persist(aluno);
+        this.entityManager.getTransaction().commit();
     }
 
     public void excluir(String nome){
@@ -33,7 +35,9 @@ public class AlunoDAO {
         aluno.setNota1(alunoEditado.getNota1());
         aluno.setNota2(alunoEditado.getNota2());
         aluno.setNota3(alunoEditado.getNota3());
-        entityManager.merge(aluno);
+        this.entityManager.getTransaction().begin();
+        this.entityManager.merge(aluno);
+        this.entityManager.getTransaction().commit();
     }
 
     public Aluno buscarAlunoPeloNome(String nome){

@@ -33,6 +33,7 @@ public class Main {
                 case 1:
                     System.out.println("Cadastrar Aluno");
                     Aluno novoAluno = criarAluno(scanner);
+                    System.out.println(novoAluno);
                     alunoDAO.cadastrar(novoAluno);
                     break;
                 case 2:
