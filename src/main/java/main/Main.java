@@ -60,7 +60,7 @@ public class Main {
                     System.out.println("Buscar aluno pelo nome");
                     System.out.print("Digite o nome do aluno: ");
                     String nomeBuscar = scanner.nextLine();
-                    alunoDAO.buscarAlunoPeloNome(nomeBuscar);
+                    System.out.println(alunoDAO.buscarAlunoPeloNome(nomeBuscar));
                     break;
                 case 5:
                     System.out.println("Listar alunos (com status de aprovação)");
