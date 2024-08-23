@@ -21,6 +21,7 @@ public class Aluno {
     private BigDecimal  nota1;
     private BigDecimal  nota2;
     private BigDecimal  nota3;
+
     public Aluno() {
     }
 
@@ -57,7 +58,7 @@ public class Aluno {
                 "Nome: " + nome + "\n" +
                 "Email: " + email + "\n" +
                 "RA: " + ra + "\n" +
-                "Notas: " + nota1 + " - " + nota2 + " - " + nota3  + "\n";
+                "Notas: " + nota1 + " - " + nota2 + " - " + nota3;
     }
 
     @Override
