@@ -1,12 +1,14 @@
 package dao;
 
 import exception.AlunoNaoEncontradoException;
+import exception.NomeInvalidoException;
 import jakarta.persistence.EntityManager;
 import modelo.Aluno;
 
 import java.util.List;
 
 public class AlunoDAO {
+
     private final EntityManager entityManager;
 
     public AlunoDAO(EntityManager entityManager) {
@@ -14,9 +16,19 @@ public class AlunoDAO {
     }
 
     public void cadastrar(Aluno aluno) {
+        if (!unicoNome(aluno.getNome()))
+            throw new NomeInvalidoException("Já existe um aluno cadastrado com este nome...");
         this.entityManager.getTransaction().begin();
         this.entityManager.persist(aluno);
         this.entityManager.getTransaction().commit();
+    }
+
+    public boolean unicoNome(String nomeAluno){
+        String jpql = "SELECT a FROM Aluno a WHERE a.nome = :n";
+        return entityManager.createQuery(jpql, Aluno.class)
+                .setParameter("n", nomeAluno)
+                .getResultList()
+                .isEmpty();
     }
 
     public void excluir(String nome) {

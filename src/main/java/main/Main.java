@@ -54,8 +54,13 @@ public class Main {
         System.out.println("\nCadastrar Aluno\n");
         Aluno novoAluno = criarAluno(scanner);
         System.out.println(novoAluno);
-        alunoDAO.cadastrar(novoAluno);
-        System.out.println("\nAluno cadastrado com sucesso!\n");
+        try {
+            alunoDAO.cadastrar(novoAluno);
+            System.out.println("\nAluno cadastrado com sucesso!\n");
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            System.out.println("Aluno não cadastrado...");
+        }
     }
 
     private Aluno criarAluno(Scanner scanner) {
