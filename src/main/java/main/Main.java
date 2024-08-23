@@ -1,31 +1,37 @@
 package main;
 
 import dao.AlunoDAO;
-import dao.DaoUtil;
+import jakarta.persistence.EntityManager;
 import modelo.Aluno;
+import util.JPAUtil;
 
 import java.math.BigDecimal;
 import java.util.Scanner;
+import java.util.logging.Level;
 
 
 public class Main {
 
-    private static final AlunoDAO alunoDAO = DaoUtil.getAlunoDAO();
-
     public static void main(String[] args) {
 
+        java.util.logging.Logger.getLogger("org.hibernate").setLevel(Level.OFF);
+
         Scanner scanner = new Scanner(System.in);
+        Main main = new Main();
+        EntityManager entityManager = JPAUtil.getEntityManager();
+        AlunoDAO alunoDAO = new AlunoDAO(entityManager);
+
         int opcao;
         do {
-            menu();
+            main.menu();
             opcao = scanner.nextInt();
             scanner.nextLine();
             switch (opcao) {
-                case 1 -> cadastrar(scanner);
-                case 2 -> excluir(scanner);
-                case 3 -> editar(scanner);
-                case 4 -> consultar(scanner);
-                case 5 -> exibir();
+                case 1 -> main.cadastrar(scanner, alunoDAO);
+                case 2 -> main.excluir(scanner, alunoDAO);
+                case 3 -> main.editar(scanner, alunoDAO);
+                case 4 -> main.consultar(scanner, alunoDAO);
+                case 5 -> main.exibir(alunoDAO);
                 case 6 -> System.out.println("Fim do programa.");
                 default -> System.out.println("Opção inválida.");
             }
@@ -33,7 +39,7 @@ public class Main {
         scanner.close();
     }
 
-    private static void menu() {
+    private void menu() {
         System.out.println("------ MENU ------");
         System.out.println("1. Cadastrar Aluno");
         System.out.println("2. Excluir Aluno");
@@ -44,7 +50,7 @@ public class Main {
         System.out.print("Escolha uma opção: ");
     }
 
-    private static void cadastrar(Scanner scanner) {
+    private void cadastrar(Scanner scanner, AlunoDAO alunoDAO) {
         System.out.println("\nCadastrar Aluno\n");
         Aluno novoAluno = criarAluno(scanner);
         System.out.println(novoAluno);
@@ -52,7 +58,7 @@ public class Main {
         System.out.println("\nAluno cadastrado com sucesso!\n");
     }
 
-    private static Aluno criarAluno(Scanner scanner) {
+    private Aluno criarAluno(Scanner scanner) {
         System.out.print("Digite o nome do aluno: ");
         String nome = scanner.nextLine();
 
@@ -76,7 +82,7 @@ public class Main {
         return new Aluno(nome, ra, email, nota1, nota2, nota3);
     }
 
-    private static void excluir(Scanner scanner) {
+    private void excluir(Scanner scanner, AlunoDAO alunoDAO) {
         System.out.println("\nExcluir Aluno\n");
         System.out.print("Digite o nome do aluno a ser excluído: ");
         String nomeCadastro = scanner.nextLine();
@@ -88,7 +94,7 @@ public class Main {
         }
     }
 
-    private static void editar(Scanner scanner) {
+    private void editar(Scanner scanner, AlunoDAO alunoDAO) {
         Aluno alunoAntigo;
         Aluno alunoNovo;
         System.out.println("\nAlterar Aluno\n");
@@ -104,7 +110,7 @@ public class Main {
         }
     }
 
-    private static Aluno alterarAluno(Scanner scanner, Aluno aluno) {
+    private Aluno alterarAluno(Scanner scanner, Aluno aluno) {
         System.out.print("Digite o novo nome do aluno: ");
         String nome = scanner.nextLine();
 
@@ -135,7 +141,7 @@ public class Main {
         return aluno;
     }
 
-    private static void consultar(Scanner scanner) {
+    private void consultar(Scanner scanner, AlunoDAO alunoDAO) {
         System.out.println("\nBuscar aluno pelo nome\n");
         System.out.print("Digite o nome do aluno: ");
         try {
@@ -146,7 +152,7 @@ public class Main {
         }
     }
 
-    private static void exibir() {
+    private void exibir(AlunoDAO alunoDAO) {
         System.out.println("\nExibindo todos os alunos:\n");
         alunoDAO.listarTodos();
     }
